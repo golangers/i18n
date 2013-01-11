@@ -1,6 +1,7 @@
 package i18n
 
 import (
+	"golanger.com/log"
 	"encoding/json"
 	"io/ioutil"
 	"os"
@@ -83,11 +84,12 @@ func (i *I18nManager) Lang(lang string) map[string]string {
 	err := i.Load(lang)
 	if err != nil {
 		lang = i.defaultLanguage
+		log.Debug("<I18nManager.Lang> ", `Load error: `, err)
 	}
 
 	i.rmutex.RLock()
 	msgs := i.languages[lang]
 	i.rmutex.RUnlock()
-
+	
 	return msgs
 }
